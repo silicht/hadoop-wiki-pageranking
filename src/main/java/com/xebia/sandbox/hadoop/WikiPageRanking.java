@@ -18,6 +18,9 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -26,8 +29,11 @@ import java.text.NumberFormat;
 public class WikiPageRanking extends Configured implements Tool {
 
     private static NumberFormat nf = new DecimalFormat("00");
+    
+    private static Logger logger = LogManager.getLogger("hadoop");
 
     public static void main(String[] args) throws Exception {
+    	BasicConfigurator.configure();
         System.exit(ToolRunner.run(new Configuration(), new WikiPageRanking(), args));
     }
 
@@ -38,7 +44,7 @@ public class WikiPageRanking extends Configured implements Tool {
 
         String lastResultPath = null;
 
-        for (int runs = 0; runs < 5; runs++) {
+        for (int runs = 0; runs < 1; runs++) {
             String inPath = "wiki/ranking/iter" + nf.format(runs);
             lastResultPath = "wiki/ranking/iter" + nf.format(runs + 1);
 
